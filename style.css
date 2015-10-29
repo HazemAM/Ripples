@@ -1,0 +1,77 @@
+button.ripple{
+	position: relative;
+
+	background: #1150ff;
+	color: white;
+
+	outline: none;
+	border: none;
+	border-radius: 4px;
+	padding: 8px 15px;
+
+	/*CANDY*/
+	transition: box-shadow 0.28s
+			  cubic-bezier(0.4,0,0.2,1);
+	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+				/*0 0px 25px 0 rgba(0,0,0,0.50),
+				0 3px 0px 0 rgba(0,0,0,0.15);*/
+	font-family: Myriad Pro, sans-serif;
+	font-weight: 100;
+	-webkit-user-select: none;
+}
+button.ripple:active{
+	/*CANDY*/
+	box-shadow: 0 6px 10px 0 rgba(0,0,0,0.3),
+			    0 2px 2px 0 rgba(0,0,0,0.2);
+}
+button.ripple:focus{
+	outline: dotted 1px;
+}
+button.ripple.white{
+	background: white;
+	color: black;
+}
+
+.circle{
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+
+	/*background: white; //set in JS and data attributes.
+	opacity: 0.60;*/
+	border-radius: 50%;
+
+	pointer-events: none;
+
+	/*******TESTING1 :S******/
+	/*opacity: 0;
+	-webkit-animation: enlarge 0.5s ease-out;*/
+	/*******TESTING1 :E******/
+}
+
+.circles{
+	position: absolute;
+	top: 0; left: 0;
+	bottom: 0; right: 0;
+
+	border-radius: inherit;
+
+	pointer-events: none;
+	overflow: hidden;
+}
+
+body{
+	background: #CCC;
+}
+
+
+/*******TESTING1 :S******/
+/*@-webkit-keyframes enlarge{
+	from{
+	opacity: 1.0;
+	}
+	to{
+	transform: scale(9,9);
+	}
+}*/
+/*******TESTING1 :E******/
