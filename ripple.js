@@ -1,16 +1,14 @@
+var Ripple = function(){};
+
 /**** VARIABLES & CONSTANTS ***/
-
-const animationTick = 20;
-const defaultOpacity = '0.60';
-var tempPressedButton = null; //Used in global mouseUp listener.
-var initialSize = 18;
-
-
+Ripple.animationTick = 20;
+Ripple.defaultOpacity = '0.60';
+Ripple.tempPressedButton = null; //Used in global mouseUp listener.
+Ripple.initialSize = 18;
 
 /**** LISTENERS ***/
-
 /*** mouseDown or keyDown for every ripple element **/
-function down(elem, e, x, y){
+Ripple.down = function(elem, e, x, y){
 	var container = elem.getElementsByClassName('circles')[0];
 	
 	var transX = x;
@@ -19,55 +17,55 @@ function down(elem, e, x, y){
 	var circle = document.createElement('div');
 	circle.className = 'circle';
 	circle.style.background = elem.dataset.rippleColor || 'white';
-	circle.style.opacity = elem.dataset.rippleOpacity || defaultOpacity;
-	circle.style.height = initialSize+'px';
-	circle.style.width = initialSize+'px';
+	circle.style.opacity = elem.dataset.rippleOpacity || Ripple.defaultOpacity;
+	circle.style.height = Ripple.initialSize+'px';
+	circle.style.width = Ripple.initialSize+'px';
 
 	circle.style.left = transX+'px';
 	circle.style.top  = transY+'px';
 
 	container.insertBefore(circle, container.firstChild); //Insert top.
-	tempPressedButton = elem;
+	Ripple.tempPressedButton = elem;
 
 	/*** Scale Animation **/
 	circle.scale = 1;
-	requestAnimationFrame(function(){ scale(circle,0.4,7) }, animationTick);
+	requestAnimationFrame(function(){ Ripple.scale(circle,0.4,7) }, Ripple.animationTick);
 }
 
-function mouseDownListen(e){
-	var x = e.pageX - this.offsetLeft - (initialSize/2),
-		y = e.pageY - this.offsetTop  - (initialSize/2)
+Ripple.mouseDownListen = function(e){
+	var x = e.pageX - this.offsetLeft - (Ripple.initialSize/2),
+		y = e.pageY - this.offsetTop  - (Ripple.initialSize/2)
 	
-	down(this, e, x, y);
+	Ripple.down(this, e, x, y);
 }
 
-function keyDownListen(e){
+Ripple.keyDownListen = function(e){
 	if(e.which != 32 && e.which != 13)
 		return;
 	else if(this.active)
 		return;
 	
-	var x = (this.clientWidth/2)  - (initialSize/2),
-		y = (this.clientHeight/2) - (initialSize/2) * 2;
+	var x = (this.clientWidth/2)  - (Ripple.initialSize/2),
+		y = (this.clientHeight/2) - (Ripple.initialSize/2) * 2;
 	
-	down(this, e, x, y);
+	Ripple.down(this, e, x, y);
 	
 	this.active = true;
 }
 
 
 /*** mouseUp global document listener for all ripple elements **/
-function upListen(e){
-	if(tempPressedButton == null) return;
-	var circle = tempPressedButton.getElementsByClassName('circles')[0].firstChild;
+Ripple.upListen = function(e){
+	if(Ripple.tempPressedButton == null) return;
+	var circle = Ripple.tempPressedButton.getElementsByClassName('circles')[0].firstChild;
 
 	if(circle && !circle.done){
 		var opacityStep =
-			(parseFloat(tempPressedButton.dataset.rippleOpacity||defaultOpacity)/2) / 10;
+			(parseFloat(Ripple.tempPressedButton.dataset.rippleOpacity||Ripple.defaultOpacity)/2) / 10;
 		circle.done = true;
 		
-		requestAnimationFrame(function(){ scale(circle,0.05,8) }, animationTick);
-		requestAnimationFrame(function(){ fadeOut(circle,opacityStep) }, animationTick);
+		requestAnimationFrame(function(){ Ripple.scale(circle,0.05,8) }, Ripple.animationTick);
+		requestAnimationFrame(function(){ Ripple.fadeOut(circle,opacityStep) }, Ripple.animationTick);
 	}
 	
 	this.active = false;
@@ -78,18 +76,18 @@ function upListen(e){
 /**** FUNCTIONS ***/
 
 /*** Scale animation function **/
-function scale(item, step, final){
+Ripple.scale = function(item, step, final){
 	item.style.transform = 'scale('+(item.scale+=step)+')';
 
 	if(item.scale >= final) //Done scaling.
 		return;
 	
-	requestAnimationFrame(function(){ scale(item,step,final) }, animationTick);
+	requestAnimationFrame(function(){ Ripple.scale(item,step,final) }, Ripple.animationTick);
 }
 
 
 /*** Fade-out animation function **/
-function fadeOut(item, step){
+Ripple.fadeOut = function(item, step){
 	var opacity = parseFloat(item.style.opacity);
 	item.style.opacity = (opacity-=step);
 
@@ -98,23 +96,23 @@ function fadeOut(item, step){
 		return;
 	}
 	
-	requestAnimationFrame(function(){ fadeOut(item, step) }, animationTick);
+	requestAnimationFrame(function(){ Ripple.fadeOut(item, step) }, Ripple.animationTick);
 }
 
 
 /*** Adding ripples **/
-function addRipples(item){
+Ripple.addRipples = function(item){
 	var container = document.createElement('div');
 
 	container.className = 'circles';
 	item.insertBefore(container, item.firstChild);
 
-	item.addEventListener('mousedown', mouseDownListen);
-	item.addEventListener('keydown', keyDownListen);
+	item.addEventListener('mousedown', Ripple.mouseDownListen);
+	item.addEventListener('keydown', Ripple.keyDownListen);
 	item.addEventListener('blur', function(e){
-		if(e.target !== tempPressedButton)
+		if(e.target !== Ripple.tempPressedButton)
 			return;
-		upListen(e);
+		Ripple.upListen(e);
 	});
 }
 
@@ -122,15 +120,15 @@ function addRipples(item){
 /**** INITIALIZATIONS ***/
 
 //Assigning global up listener:
-document.addEventListener('mouseup', upListen);
+document.addEventListener('mouseup', Ripple.upListen);
 document.addEventListener('keyup', function(e){
 	if(e.which != 32 && e.which != 13)
 		return;
-	upListen(e);
+	Ripple.upListen(e);
 	e.target.active = false;
 });
 
 //Assigning down listener for each ripple elements:
-var items = document.getElementsByClassName('ripple');
-for(i=0; i<items.length; i++)
-	addRipples(items[i]);
+var rippleElements = document.getElementsByClassName('ripple');
+for(i=0; i<rippleElements.length; i++)
+	Ripple.addRipples(rippleElements[i]);
