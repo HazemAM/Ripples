@@ -6,6 +6,8 @@
 	Ripple.defaultOpacity = '0.60';
 	Ripple.tempPressedButton = null; //Used in global mouseUp listener.
 	Ripple.initialSize = 18;
+	Ripple.duration = 750;
+	Ripple.maxScale = 7;
 
 	/**** LISTENERS ***/
 	/*** mouseDown or keyDown for every ripple element **/
@@ -30,7 +32,7 @@
 
 		/*** Scale Animation **/
 		circle.scale = 1;
-		requestAnimationFrame(function(){ Ripple.scale(circle,0.4,7) }, Ripple.animationTick);
+		requestAnimationFrame(function(){ Ripple.scale(circle) });
 	}
 
 	Ripple.mouseDownListen = function(e){
@@ -65,7 +67,6 @@
 				(parseFloat(Ripple.tempPressedButton.dataset.rippleOpacity||Ripple.defaultOpacity)/2) / 10;
 			circle.done = true;
 			
-			requestAnimationFrame(function(){ Ripple.scale(circle,0.05,8) }, Ripple.animationTick);
 			requestAnimationFrame(function(){ Ripple.fadeOut(circle,opacityStep) }, Ripple.animationTick);
 		}
 		
@@ -77,13 +78,27 @@
 	/**** FUNCTIONS ***/
 
 	/*** Scale animation function **/
-	Ripple.scale = function(item, step, final){
-		item.style.transform = 'scale('+(item.scale+=step)+')';
-
-		if(item.scale >= final) //Done scaling.
-			return;
+	Ripple.scale = function(item){
+		var startTime = new Date(),
+			timePassed,
+			progress,
+			animationID;
 		
-		requestAnimationFrame(function(){ Ripple.scale(item,step,final) }, Ripple.animationTick);
+		(function doScale(){
+			timePassed = new Date() - startTime;
+			progress = Math.min(timePassed / Ripple.duration, 1);
+
+			item.scale = Ripple.maxScale * Ripple.ease(progress);
+			item.style.transform = 'scale(' + item.scale + ')';
+
+			if(progress === 1){ //Done scaling.
+				cancelAnimationFrame(animationID);
+				animationID = null;
+				return;
+			}
+
+			animationID = requestAnimationFrame(doScale);
+		})();
 	}
 
 
