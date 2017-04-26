@@ -118,6 +118,13 @@
 	}
 
 
+	/*** Easing function (exponential out easing) **/
+	/*** (Source: Tween.js) **/
+	Ripple.ease = function(k){
+		return k === 1 ? 1 : 1 - Math.pow(2, - 10 * k);
+	}
+
+
 	/**** INITIALIZATIONS ***/
 
 	//Assigning global up listener:
