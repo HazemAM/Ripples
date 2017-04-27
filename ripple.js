@@ -79,13 +79,13 @@
 
 	/*** Scale animation function **/
 	Ripple.scale = function(item){
-		var startTime = new Date(),
+		var startTime = Ripple.now(),
 			timePassed,
 			progress,
 			animationID;
 		
 		(function doScale(){
-			timePassed = new Date() - startTime;
+			timePassed = Ripple.now() - startTime;
 			progress = Math.min(timePassed / Ripple.scaleDuration, 1);
 
 			item.scale = Ripple.maxScale * Ripple.ease(progress);
@@ -105,7 +105,7 @@
 
 	/*** Fade-out animation function **/
 	Ripple.fadeOut = function(item){
-		var startTime = new Date(),
+		var startTime = Ripple.now(),
 			timePassed,
 			progress,
 			animationID;
@@ -114,7 +114,7 @@
 			opacity;
 
 		(function doFadeOut(){
-			timePassed = new Date() - startTime;
+			timePassed = Ripple.now() - startTime;
 			progress = Math.min(timePassed / Ripple.fadeDuration, 1);
 			
 			opacity = initialOpacity - (initialOpacity * progress);
@@ -154,6 +154,12 @@
 	Ripple.ease = function(k){
 		return k === 1 ? 1 : 1 - Math.pow(2, - 10 * k);
 	}
+
+
+	/*** Getting time now **/
+	Ripple.now = (window.performance && window.performance.now)
+		? window.performance.now.bind(window.performance)
+		: Date.now;
 
 
 	/**** INITIALIZATIONS ***/
