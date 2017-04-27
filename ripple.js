@@ -32,7 +32,7 @@
 
 		/*** Scale Animation **/
 		circle.scale = 1;
-		requestAnimationFrame(function(){ Ripple.scale(circle) });
+		window.requestAnimationFrame(function(){ Ripple.scale(circle) });
 	}
 
 	Ripple.mouseDownListen = function(e){
@@ -67,7 +67,7 @@
 				(parseFloat(Ripple.tempPressedButton.dataset.rippleOpacity||Ripple.defaultOpacity)/2) / 10;
 			circle.done = true;
 			
-			requestAnimationFrame(function(){ Ripple.fadeOut(circle) });
+			window.requestAnimationFrame(function(){ Ripple.fadeOut(circle) });
 		}
 		
 		this.active = false;
@@ -93,12 +93,12 @@
 			item.style.transform = 'scale3d(' + item.scale + ',' + item.scale + ',1)';
 
 			if(progress === 1){ //Done scaling.
-				cancelAnimationFrame(animationID);
+				window.cancelAnimationFrame(animationID);
 				animationID = null;
 				return;
 			}
 
-			animationID = requestAnimationFrame(doScale);
+			animationID = window.requestAnimationFrame(doScale);
 		})();
 	}
 
@@ -122,12 +122,12 @@
 
 			if(opacity === 0){ //Done fading & done everything; delete.
 				item.parentNode.removeChild(item);
-				cancelAnimationFrame(animationID);
+				window.cancelAnimationFrame(animationID);
 				animationID = null;
 				return;
 			}
 			
-			animationID = requestAnimationFrame(doFadeOut);
+			animationID = window.requestAnimationFrame(doFadeOut);
 		})();
 	}
 
