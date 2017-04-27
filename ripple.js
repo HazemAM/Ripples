@@ -2,11 +2,11 @@
 	var Ripple = function(){};
 
 	/**** VARIABLES & CONSTANTS ***/
-	Ripple.animationTick = 20;
 	Ripple.defaultOpacity = '0.60';
 	Ripple.tempPressedButton = null; //Used in global mouseUp listener.
 	Ripple.initialSize = 18;
-	Ripple.duration = 750;
+	Ripple.scaleDuration = 750;
+	Ripple.fadeDuration = 400;
 	Ripple.maxScale = 7;
 
 	/**** LISTENERS ***/
@@ -67,7 +67,7 @@
 				(parseFloat(Ripple.tempPressedButton.dataset.rippleOpacity||Ripple.defaultOpacity)/2) / 10;
 			circle.done = true;
 			
-			requestAnimationFrame(function(){ Ripple.fadeOut(circle,opacityStep) }, Ripple.animationTick);
+			requestAnimationFrame(function(){ Ripple.fadeOut(circle) });
 		}
 		
 		this.active = false;
@@ -86,7 +86,7 @@
 		
 		(function doScale(){
 			timePassed = new Date() - startTime;
-			progress = Math.min(timePassed / Ripple.duration, 1);
+			progress = Math.min(timePassed / Ripple.scaleDuration, 1);
 
 			item.scale = Ripple.maxScale * Ripple.ease(progress);
 			item.style.transform = 'scale(' + item.scale + ')';
@@ -103,16 +103,31 @@
 
 
 	/*** Fade-out animation function **/
-	Ripple.fadeOut = function(item, step){
-		var opacity = parseFloat(item.style.opacity);
-		item.style.opacity = (opacity-=step);
+	Ripple.fadeOut = function(item){
+		var startTime = new Date(),
+			timePassed,
+			progress,
+			animationID;
 
-		if(opacity <= 0){ //Done fading & done everything; delete.
-			item.parentNode.removeChild(item);
-			return;
-		}
-		
-		requestAnimationFrame(function(){ Ripple.fadeOut(item, step) }, Ripple.animationTick);
+		var initialOpacity = parseFloat(item.style.opacity),
+			opacity;
+
+		(function doFadeOut(){
+			timePassed = new Date() - startTime;
+			progress = Math.min(timePassed / Ripple.fadeDuration, 1);
+			
+			opacity = initialOpacity - (initialOpacity * progress);
+			item.style.opacity = Math.max(opacity, 0);
+
+			if(opacity === 0){ //Done fading & done everything; delete.
+				item.parentNode.removeChild(item);
+				cancelAnimationFrame(animationID);
+				animationID = null;
+				return;
+			}
+			
+			animationID = requestAnimationFrame(doFadeOut);
+		})();
 	}
 
 
