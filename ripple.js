@@ -32,7 +32,7 @@
 
 		/*** Scale Animation **/
 		circle.scale = 1;
-		window.requestAnimationFrame(function(){ Ripple.scale(circle) });
+		Ripple.scale(circle);
 	}
 
 	Ripple.mouseDownListen = function(e){
@@ -67,7 +67,7 @@
 				(parseFloat(Ripple.tempPressedButton.dataset.rippleOpacity||Ripple.defaultOpacity)/2) / 10;
 			circle.done = true;
 			
-			window.requestAnimationFrame(function(){ Ripple.fadeOut(circle) });
+			Ripple.fadeOut(circle);
 		}
 		
 		this.active = false;
