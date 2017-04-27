@@ -89,7 +89,8 @@
 			progress = Math.min(timePassed / Ripple.scaleDuration, 1);
 
 			item.scale = Ripple.maxScale * Ripple.ease(progress);
-			item.style.transform = 'scale(' + item.scale + ')';
+			item.style.webkitTransform = 'scale(' + item.scale + ')';
+			item.style.transform = 'scale3d(' + item.scale + ',' + item.scale + ',1)';
 
 			if(progress === 1){ //Done scaling.
 				cancelAnimationFrame(animationID);
