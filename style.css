@@ -1,6 +1,8 @@
-button.ripple{
-	position: relative;
+body{
+	background: #CCC;
+}
 
+button{
 	background: #1150ff;
 	color: white;
 
@@ -13,33 +15,19 @@ button.ripple{
 	transition: box-shadow 0.28s
 			  cubic-bezier(0.4,0,0.2,1);
 	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
-				/*0 0px 25px 0 rgba(0,0,0,0.50),
-				0 3px 0px 0 rgba(0,0,0,0.15);*/
 	font-family: Myriad Pro, sans-serif;
 	font-weight: 100;
 	-webkit-user-select: none;
 }
-button.ripple:active{
+button:active{
 	/*CANDY*/
 	box-shadow: 0 6px 10px 0 rgba(0,0,0,0.3),
 			    0 2px 2px 0 rgba(0,0,0,0.2);
 }
-button.ripple:focus{
+button:focus{
 	outline: dotted 1px;
 }
-button.ripple.white{
+button.white{
 	background: white;
 	color: black;
 }
-
-
-/*******TESTING1 :S******/
-/*@-webkit-keyframes enlarge{
-	from{
-	opacity: 1.0;
-	}
-	to{
-	transform: scale(9,9);
-	}
-}*/
-/*******TESTING1 :E******/
