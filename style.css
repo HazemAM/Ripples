@@ -32,38 +32,6 @@ button.ripple.white{
 	color: black;
 }
 
-.circle{
-	position: absolute;
-	top: 0; left: 0;
-	bottom: 0; right: 0;
-
-	/*background: white; //set in JS and data attributes.
-	opacity: 0.60;*/
-	border-radius: 50%;
-
-	pointer-events: none;
-
-	/*******TESTING1 :S******/
-	/*opacity: 0;
-	-webkit-animation: enlarge 0.5s ease-out;*/
-	/*******TESTING1 :E******/
-}
-
-.circles{
-	position: absolute;
-	top: 0; left: 0;
-	bottom: 0; right: 0;
-
-	border-radius: inherit;
-
-	pointer-events: none;
-	overflow: hidden;
-}
-
-body{
-	background: #CCC;
-}
-
 
 /*******TESTING1 :S******/
 /*@-webkit-keyframes enlarge{
