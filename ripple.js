@@ -43,7 +43,9 @@
 	}
 
 	Ripple.keyDownListen = function(e){
-		if(e.which != 32 && e.which != 13)
+		if(e.key != ' ' && e.key != 'Spacebar'
+			&& e.key != 'Enter'
+			&& e.keyCode != 13 && e.keyCode != 32)
 			return;
 		else if(this.active)
 			return;
