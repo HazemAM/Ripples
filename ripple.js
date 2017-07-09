@@ -1,4 +1,3 @@
-(function(){
 	var Ripple = function(){};
 
 	/**** VARIABLES & CONSTANTS ***/
@@ -180,4 +179,3 @@
 	var rippleElements = document.getElementsByClassName('ripple');
 	for(i=0; i<rippleElements.length; i++)
 		Ripple.addRipples(rippleElements[i]);
-})();
