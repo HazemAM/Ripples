@@ -36,8 +36,9 @@
 	}
 
 	Ripple.mouseDownListen = function(e){
-		var x = e.pageX - this.offsetLeft - (Ripple.initialSize/2),
-			y = e.pageY - this.offsetTop  - (Ripple.initialSize/2)
+		var rect = this.getBoundingClientRect(),
+			x = e.pageX - rect.left - (Ripple.initialSize/2),
+			y = e.pageY - rect.top  - (Ripple.initialSize/2);
 		
 		Ripple.down(this, e, x, y);
 	}
