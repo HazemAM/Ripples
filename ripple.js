@@ -11,6 +11,10 @@ Ripple.maxScale = 7;
 /**** LISTENERS ***/
 /*** mouseDown or keyDown for every ripple element **/
 Ripple.down = function(elem, e, x, y){
+	//Do not run if element is disabled:
+	if(elem.disabled)
+		return;
+		
 	var container = elem.getElementsByClassName('circles')[0];
 	
 	var transX = x;
