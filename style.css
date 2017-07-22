@@ -31,3 +31,7 @@ button.white{
 	background: white;
 	color: black;
 }
+
+.cont{
+	position: absolute;
+}
