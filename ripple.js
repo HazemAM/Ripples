@@ -67,14 +67,11 @@ Ripple.upListen = function(e){
 	var circle = Ripple.tempPressedButton.getElementsByClassName('circles')[0].firstChild;
 
 	if(circle && !circle.done){
-		var opacityStep =
-			(parseFloat(Ripple.tempPressedButton.dataset.rippleOpacity||Ripple.defaultOpacity)/2) / 10;
 		circle.done = true;
-		
 		Ripple.fadeOut(circle);
 	}
 	
-	this.active = false;
+	Ripple.tempPressedButton.active = false;
 }
 
 
