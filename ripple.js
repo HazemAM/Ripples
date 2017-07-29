@@ -47,9 +47,7 @@ Ripple.mouseDownListen = function(e){
 }
 
 Ripple.keyDownListen = function(e){
-	if(e.key != ' ' && e.key != 'Spacebar'
-		&& e.key != 'Enter'
-		&& e.keyCode != 13 && e.keyCode != 32)
+	if(!Ripple.isSpacebarOrEnter(e))
 		return;
 	else if(this.active)
 		return;
@@ -168,13 +166,22 @@ Ripple.now = (window.performance && window.performance.now)
 	: Date.now;
 
 
+/*** Key events helper **/
+Ripple.isSpacebarOrEnter = function(e){
+	return e.key === ' ' || e.key === 'Spacebar'
+		|| e.key === 'Enter'
+		|| e.keyCode === 13 || e.keyCode === 32;
+}
+
+
 /**** INITIALIZATIONS ***/
 
 //Assigning global up listener:
 document.addEventListener('mouseup', Ripple.upListen);
 document.addEventListener('keyup', function(e){
-	if(e.which != 32 && e.which != 13)
+	if(!Ripple.isSpacebarOrEnter(e))
 		return;
+		
 	Ripple.upListen(e);
 	e.target.active = false;
 });
