@@ -3,14 +3,13 @@ var Ripple = function(){};
 /**** VARIABLES & CONSTANTS ***/
 Ripple.defaultOpacity = '0.60';
 Ripple.tempPressedButton = null; //Used in global mouseUp listener.
-Ripple.initialSize = 18;
 Ripple.scaleDuration = 750;
 Ripple.fadeDuration = 400;
 Ripple.maxScale = 7;
 
 /**** LISTENERS ***/
 /*** mouseDown or keyDown for every ripple element **/
-Ripple.down = function(elem, e, x, y){
+Ripple.down = function(elem, e, x, y, w, h){
 	//Do not run if element is disabled:
 	if(elem.disabled)
 		return;
@@ -19,13 +18,14 @@ Ripple.down = function(elem, e, x, y){
 	
 	var transX = x;
 	var transY = y;
+	var initialSize = Math.max(w, h) / 3;
 
 	var circle = document.createElement('div');
 	circle.className = 'circle';
 	circle.style.background = elem.dataset.rippleColor || 'white';
 	circle.style.opacity = elem.dataset.rippleOpacity || Ripple.defaultOpacity;
-	circle.style.height = Ripple.initialSize+'px';
-	circle.style.width = Ripple.initialSize+'px';
+	circle.style.height = initialSize + 'px';
+	circle.style.width = initialSize + 'px';
 
 	circle.style.left = transX+'px';
 	circle.style.top  = transY+'px';
@@ -40,10 +40,10 @@ Ripple.down = function(elem, e, x, y){
 
 Ripple.mouseDownListen = function(e){
 	var rect = this.getBoundingClientRect(),
-		x = e.pageX - rect.left - (Ripple.initialSize/2),
-		y = e.pageY - rect.top  - (Ripple.initialSize/2);
+		x = e.pageX - rect.left,
+		y = e.pageY - rect.top;
 	
-	Ripple.down(this, e, x, y);
+	Ripple.down(this, e, x, y, rect.width, rect.height);
 }
 
 Ripple.keyDownListen = function(e){
@@ -52,10 +52,11 @@ Ripple.keyDownListen = function(e){
 	else if(this.active)
 		return;
 	
-	var x = (this.clientWidth/2)  - (Ripple.initialSize/2),
-		y = (this.clientHeight/2) - (Ripple.initialSize/2) * 2;
+	var rect = this.getBoundingClientRect(),
+		x = rect.width / 2,
+		y = rect.height / 3;
 	
-	Ripple.down(this, e, x, y);
+	Ripple.down(this, e, x, y, rect.width, rect.height);
 	
 	this.active = true;
 }
