@@ -19,8 +19,6 @@
 	border-radius: 50%;
 	pointer-events: none;
 	user-select: none;
-
-	will-change: transform, opacity;
 }
 
 .ripple{
