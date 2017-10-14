@@ -12,13 +12,10 @@ Ripple.down = function(elem, e, x, y, w, h){
 	//Do not run if element is disabled:
 	if(elem.disabled)
 		return;
-		
-	var container = elem.getElementsByClassName('circles')[0];
 	
-	var transX = x;
-	var transY = y;
 	var initialSize = Math.max(w, h) / 3;
 
+	//Preparing a ripple circle:
 	var circle = document.createElement('div');
 	circle.className = 'circle';
 	circle.style.background = elem.dataset.rippleColor || 'white';
@@ -26,9 +23,11 @@ Ripple.down = function(elem, e, x, y, w, h){
 	circle.style.height = initialSize + 'px';
 	circle.style.width = initialSize + 'px';
 
-	circle.style.left = transX+'px';
-	circle.style.top  = transY+'px';
+	circle.style.left = (x - initialSize / 2) + 'px';
+	circle.style.top  = (y - initialSize / 2) + 'px';
 
+	//Adding the ripple circle:
+	var container = elem.getElementsByClassName('circles')[0];
 	container.insertBefore(circle, container.firstChild); //Insert top.
 	Ripple.tempPressedButton = elem;
 
