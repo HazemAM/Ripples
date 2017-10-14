@@ -5,7 +5,6 @@ Ripple.defaultOpacity = '0.60';
 Ripple.tempPressedButton = null; //Used in global mouseUp listener.
 Ripple.scaleDuration = 750;
 Ripple.fadeDuration = 400;
-Ripple.maxScale = 7;
 
 /**** LISTENERS ***/
 /*** mouseDown or keyDown for every ripple element **/
@@ -33,9 +32,11 @@ Ripple.down = function(elem, e, x, y, w, h){
 	container.insertBefore(circle, container.firstChild); //Insert top.
 	Ripple.tempPressedButton = elem;
 
-	/*** Scale Animation **/
+	//Scale animation:
+	var scaleGoal = Math.max(w, h) * 2,
+		scaleRatio = scaleGoal / initialSize;
 	circle.scale = 1;
-	Ripple.scale(circle);
+	Ripple.scale(circle, scaleRatio);
 }
 
 Ripple.mouseDownListen = function(e){
@@ -80,7 +81,7 @@ Ripple.upListen = function(e){
 /**** FUNCTIONS ***/
 
 /*** Scale animation function **/
-Ripple.scale = function(item){
+Ripple.scale = function(item, ratio){
 	var startTime = Ripple.now(),
 		timePassed,
 		progress,
@@ -90,7 +91,7 @@ Ripple.scale = function(item){
 		timePassed = Ripple.now() - startTime;
 		progress = Math.min(timePassed / Ripple.scaleDuration, 1);
 
-		item.scale = Ripple.maxScale * Ripple.ease(progress);
+		item.scale = ratio * Ripple.ease(progress);
 		item.style.webkitTransform = 'scale(' + item.scale + ')';
 		item.style.transform = 'scale3d(' + item.scale + ',' + item.scale + ',1)';
 
