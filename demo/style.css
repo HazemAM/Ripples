@@ -14,20 +14,21 @@ button,
 	margin-bottom: 10px;
 
 	/* CANDY: */
-	transition: box-shadow 0.28s
-			  cubic-bezier(0.4,0,0.2,1);
+	transition: box-shadow 0.28s cubic-bezier(0.4,0,0.2,1);
 	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
 	font-family: Myriad Pro, sans-serif;
 	font-weight: 100;
 
 	-webkit-user-select: none;
-			user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 button:active,
 .img-container:active{
 	/* CANDY: */
 	box-shadow: 0 6px 10px 0 rgba(0,0,0,0.3),
-			    0 2px 2px 0 rgba(0,0,0,0.2);
+	            0 2px 2px 0 rgba(0,0,0,0.2);
 }
 button:focus,
 .img-container:focus{
