@@ -7,7 +7,7 @@
 var Ripple = function(){};
 
 /**** VARIABLES & CONSTANTS ***/
-Ripple.defaultOpacity = '0.60';
+Ripple.defaultOpacity = '0.5';
 Ripple.tempPressedButton = null; //Used in global mouseUp listener.
 Ripple.scaleDuration = 750;
 Ripple.fadeDuration = 400;
@@ -192,5 +192,5 @@ document.addEventListener('keyup', function(e){
 
 //Assigning down listener for each ripple elements:
 var rippleElements = document.getElementsByClassName('ripple');
-for(i=0; i<rippleElements.length; i++)
+for(i = 0; i < rippleElements.length; i++)
 	Ripple.addRipples(rippleElements[i]);
