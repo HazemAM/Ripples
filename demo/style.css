@@ -1,8 +1,9 @@
 body{
-	background: #CCC;
+	background: #DDD;
 }
 
-button{
+button,
+.img-container{
 	background: #1150ff;
 	color: white;
 
@@ -10,28 +11,47 @@ button{
 	border: none;
 	border-radius: 4px;
 	padding: 8px 15px;
+	margin-bottom: 10px;
 
-	/*CANDY*/
+	/* CANDY: */
 	transition: box-shadow 0.28s
 			  cubic-bezier(0.4,0,0.2,1);
 	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
 	font-family: Myriad Pro, sans-serif;
 	font-weight: 100;
+
 	-webkit-user-select: none;
+			user-select: none;
 }
-button:active{
-	/*CANDY*/
+button:active,
+.img-container:active{
+	/* CANDY: */
 	box-shadow: 0 6px 10px 0 rgba(0,0,0,0.3),
 			    0 2px 2px 0 rgba(0,0,0,0.2);
 }
-button:focus{
+button:focus,
+.img-container:focus{
 	outline: dotted 1px;
+	outline-offset: -4px;
 }
 button.white{
 	background: white;
 	color: black;
 }
 
-.cont{
+.absolute-container{
 	position: absolute;
+	top: 35px;
+	left: 100px;
+}
+
+.img-container{
+	width: 250px;
+	height: 150px;
+	padding: 0;
+
+	overflow: hidden;
+}
+.img-container > img{
+	pointer-events: none;
 }
