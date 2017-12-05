@@ -42,7 +42,7 @@ Ripple.down = function(elem, e, x, y, w, h){
 		scaleRatio = scaleGoal / initialSize;
 	circle.scale = 1;
 	Ripple.scale(circle, scaleRatio);
-}
+};
 
 Ripple.mouseDownListen = function(e){
 	var rect = this.getBoundingClientRect(),
@@ -50,7 +50,7 @@ Ripple.mouseDownListen = function(e){
 		y = e.pageY - rect.top;
 	
 	Ripple.down(this, e, x, y, rect.width, rect.height);
-}
+};
 
 Ripple.keyDownListen = function(e){
 	if(!Ripple.isSpacebarOrEnter(e))
@@ -65,7 +65,7 @@ Ripple.keyDownListen = function(e){
 	Ripple.down(this, e, x, y, rect.width, rect.height);
 	
 	this.active = true;
-}
+};
 
 
 /*** mouseUp global document listener for all ripple elements **/
@@ -79,7 +79,7 @@ Ripple.upListen = function(e){
 	}
 	
 	Ripple.tempPressedButton.active = false;
-}
+};
 
 
 
@@ -108,7 +108,7 @@ Ripple.scale = function(item, ratio){
 
 		animationID = window.requestAnimationFrame(doScale);
 	})();
-}
+};
 
 
 /*** Fade-out animation function **/
@@ -137,7 +137,7 @@ Ripple.fadeOut = function(item){
 		
 		animationID = window.requestAnimationFrame(doFadeOut);
 	})();
-}
+};
 
 
 /*** Adding ripples **/
@@ -154,28 +154,28 @@ Ripple.addRipples = function(item){
 			return;
 		Ripple.upListen(e);
 	});
-}
+};
 
 
 /*** Easing function (exponential out easing) **/
 /*** (Source: Tween.js) **/
 Ripple.ease = function(k){
 	return k === 1 ? 1 : 1 - Math.pow(2, - 10 * k);
-}
+};
 
 
 /*** Getting time now **/
 Ripple.now = (window.performance && window.performance.now)
-	? window.performance.now.bind(window.performance)
-	: Date.now;
+    ? window.performance.now.bind(window.performance)
+    : Date.now;
 
 
 /*** Key events helper **/
 Ripple.isSpacebarOrEnter = function(e){
-	return e.key === ' ' || e.key === 'Spacebar'
-		|| e.key === 'Enter'
-		|| e.keyCode === 13 || e.keyCode === 32;
-}
+	return e.key === ' ' || e.key === 'Spacebar' ||
+		   e.key === 'Enter' ||
+		   e.keyCode === 13 || e.keyCode === 32;
+};
 
 
 /**** INITIALIZATIONS ***/
@@ -190,7 +190,7 @@ document.addEventListener('keyup', function(e){
 	e.target.active = false;
 });
 
-//Assigning down listener for each ripple elements:
+//Assigning down listener for each ripple element:
 var rippleElements = document.getElementsByClassName('ripple');
-for(i = 0; i < rippleElements.length; i++)
-	Ripple.addRipples(rippleElements[i]);
+for(var elemIndex = 0; elemIndex < rippleElements.length; elemIndex++)
+	Ripple.addRipples(rippleElements[elemIndex]);
