@@ -27,21 +27,31 @@ A simple, standalone, and customizable Material Design [surface reaction](https:
 
 ## Installation
 
-Add `script.js` and `style.css` in your HTML, e.g.:
+You can use it in one of two ways:
 
-````html
-<link rel="stylesheet" href="ripples/style.css"/>
-<script src="ripples/script.js"></script>
-````
+1. You can add `script.js` and `style.css` in your HTML, e.g.:
+
+   ````html
+   <link rel="stylesheet" href="ripples/style.css"/>
+   <script src="ripples/script.js"></script>
+   ````
+
+   Then use it from global scope (`window.Ripples`).
+   
+2. Or you can just add `script.js` and `style.css` to your project tree and then `require()` it as a module (e.g. `CommonJS`, `AMD`).
 
 
 ## Usage
 
-Add a `ripple` class to the DOM elements you want the ripples added to, e.g.:
+To use *Ripples*:
 
-````html
-<button class="ripple">Hello!</button>
-````
+1. First, add a `ripple` class to the DOM elements you want the ripples added to, e.g.:
+
+   ````html
+   <button class="ripple">Hello!</button>
+   ````
+
+2. Then, call `Ripples.init()` when the page/app is ready.
 
 **Warning:** *Ripples* work on all elements except [void elements](http://www.w3.org/TR/html5/syntax.html#void-elements). If you want ripples to be added to a void element, you must wrap it in, say, a `div` parent.
 
