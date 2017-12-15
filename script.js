@@ -180,17 +180,19 @@ Ripples.isSpacebarOrEnter = function(e){
 
 /**** INITIALIZATIONS ***/
 
-//Assigning global up listener:
-document.addEventListener('mouseup', Ripple.upListen);
-document.addEventListener('keyup', function(e){
-	if(!Ripple.isSpacebarOrEnter(e))
-		return;
-		
-	Ripple.upListen(e);
-	e.target.active = false;
-});
+Ripples.init = function(){
+	//Assigning global up listener:
+	document.addEventListener('mouseup', Ripples.upListen);
+	document.addEventListener('keyup', function(e){
+		if(!Ripples.isSpacebarOrEnter(e))
+			return;
+			
+		Ripples.upListen(e);
+		e.target.active = false;
+	});
 
-//Assigning down listener for each ripple element:
-var rippleElements = document.getElementsByClassName('ripple');
-for(var elemIndex = 0; elemIndex < rippleElements.length; elemIndex++)
-	Ripple.addRipples(rippleElements[elemIndex]);
+	//Assigning down listener for each ripple element:
+	var rippleElements = document.getElementsByClassName('ripple');
+	for(var elemIndex = 0; elemIndex < rippleElements.length; elemIndex++)
+		Ripples.addRipples(rippleElements[elemIndex]);
+};
