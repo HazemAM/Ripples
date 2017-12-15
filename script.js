@@ -196,3 +196,15 @@ Ripples.init = function(){
 	for(var elemIndex = 0; elemIndex < rippleElements.length; elemIndex++)
 		Ripples.addRipples(rippleElements[elemIndex]);
 };
+
+
+/*** Module export **/
+if(typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
+	module.exports = Ripples;
+} else if(typeof define === 'function' && define.amd){
+	define(function(){
+		return Ripples;
+	});
+} else if(window){
+	window.Ripples = Ripples;
+}
