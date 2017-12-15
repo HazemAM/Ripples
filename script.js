@@ -4,17 +4,17 @@
  * <http://apache.org/licenses/LICENSE-2.0.html>.
  */
 
-var Ripple = function(){};
+var Ripples = function(){};
 
 /**** VARIABLES & CONSTANTS ***/
-Ripple.defaultOpacity = '0.5';
-Ripple.tempPressedButton = null; //Used in global mouseUp listener.
-Ripple.scaleDuration = 750;
-Ripple.fadeDuration = 400;
+Ripples.defaultOpacity = '0.5';
+Ripples.tempPressedButton = null; //Used in global mouseUp listener.
+Ripples.scaleDuration = 750;
+Ripples.fadeDuration = 400;
 
 /**** LISTENERS ***/
 /*** mouseDown or keyDown for every ripple element **/
-Ripple.down = function(elem, e, x, y, w, h){
+Ripples.down = function(elem, e, x, y, w, h){
 	//Do not run if element is disabled:
 	if(elem.disabled)
 		return;
@@ -25,7 +25,7 @@ Ripple.down = function(elem, e, x, y, w, h){
 	var circle = document.createElement('div');
 	circle.className = 'circle';
 	circle.style.background = elem.dataset.rippleColor || 'white';
-	circle.style.opacity = elem.dataset.rippleOpacity || Ripple.defaultOpacity;
+	circle.style.opacity = elem.dataset.rippleOpacity || Ripples.defaultOpacity;
 	circle.style.height = initialSize + 'px';
 	circle.style.width = initialSize + 'px';
 
@@ -35,25 +35,25 @@ Ripple.down = function(elem, e, x, y, w, h){
 	//Adding the ripple circle:
 	var container = elem.getElementsByClassName('circles')[0];
 	container.insertBefore(circle, container.firstChild); //Insert top.
-	Ripple.tempPressedButton = elem;
+	Ripples.tempPressedButton = elem;
 
 	//Scale animation:
 	var scaleGoal = Math.max(w, h) * 2,
 		scaleRatio = scaleGoal / initialSize;
 	circle.scale = 1;
-	Ripple.scale(circle, scaleRatio);
+	Ripples.scale(circle, scaleRatio);
 };
 
-Ripple.mouseDownListen = function(e){
+Ripples.mouseDownListen = function(e){
 	var rect = this.getBoundingClientRect(),
 		x = e.pageX - rect.left,
 		y = e.pageY - rect.top;
 	
-	Ripple.down(this, e, x, y, rect.width, rect.height);
+	Ripples.down(this, e, x, y, rect.width, rect.height);
 };
 
-Ripple.keyDownListen = function(e){
-	if(!Ripple.isSpacebarOrEnter(e))
+Ripples.keyDownListen = function(e){
+	if(!Ripples.isSpacebarOrEnter(e))
 		return;
 	else if(this.active)
 		return;
@@ -62,23 +62,23 @@ Ripple.keyDownListen = function(e){
 		x = rect.width / 2,
 		y = rect.height / 3;
 	
-	Ripple.down(this, e, x, y, rect.width, rect.height);
+	Ripples.down(this, e, x, y, rect.width, rect.height);
 	
 	this.active = true;
 };
 
 
 /*** mouseUp global document listener for all ripple elements **/
-Ripple.upListen = function(e){
-	if(Ripple.tempPressedButton == null) return;
-	var circle = Ripple.tempPressedButton.getElementsByClassName('circles')[0].firstChild;
+Ripples.upListen = function(e){
+	if(Ripples.tempPressedButton == null) return;
+	var circle = Ripples.tempPressedButton.getElementsByClassName('circles')[0].firstChild;
 
 	if(circle && !circle.done){
 		circle.done = true;
-		Ripple.fadeOut(circle);
+		Ripples.fadeOut(circle);
 	}
 	
-	Ripple.tempPressedButton.active = false;
+	Ripples.tempPressedButton.active = false;
 };
 
 
@@ -86,17 +86,17 @@ Ripple.upListen = function(e){
 /**** FUNCTIONS ***/
 
 /*** Scale animation function **/
-Ripple.scale = function(item, ratio){
-	var startTime = Ripple.now(),
+Ripples.scale = function(item, ratio){
+	var startTime = Ripples.now(),
 		timePassed,
 		progress,
 		animationID;
 	
 	(function doScale(){
-		timePassed = Ripple.now() - startTime;
-		progress = Math.min(timePassed / Ripple.scaleDuration, 1);
+		timePassed = Ripples.now() - startTime;
+		progress = Math.min(timePassed / Ripples.scaleDuration, 1);
 
-		item.scale = ratio * Ripple.ease(progress);
+		item.scale = ratio * Ripples.ease(progress);
 		item.style.webkitTransform = 'scale(' + item.scale + ')';
 		item.style.transform = 'scale3d(' + item.scale + ',' + item.scale + ',1)';
 
@@ -112,8 +112,8 @@ Ripple.scale = function(item, ratio){
 
 
 /*** Fade-out animation function **/
-Ripple.fadeOut = function(item){
-	var startTime = Ripple.now(),
+Ripples.fadeOut = function(item){
+	var startTime = Ripples.now(),
 		timePassed,
 		progress,
 		animationID;
@@ -122,8 +122,8 @@ Ripple.fadeOut = function(item){
 		opacity;
 
 	(function doFadeOut(){
-		timePassed = Ripple.now() - startTime;
-		progress = Math.min(timePassed / Ripple.fadeDuration, 1);
+		timePassed = Ripples.now() - startTime;
+		progress = Math.min(timePassed / Ripples.fadeDuration, 1);
 		
 		opacity = initialOpacity - (initialOpacity * progress);
 		item.style.opacity = Math.max(opacity, 0);
@@ -141,37 +141,37 @@ Ripple.fadeOut = function(item){
 
 
 /*** Adding ripples **/
-Ripple.addRipples = function(item){
+Ripples.addRipples = function(item){
 	var container = document.createElement('div');
 
 	container.className = 'circles';
 	item.insertBefore(container, item.firstChild);
 
-	item.addEventListener('mousedown', Ripple.mouseDownListen);
-	item.addEventListener('keydown', Ripple.keyDownListen);
+	item.addEventListener('mousedown', Ripples.mouseDownListen);
+	item.addEventListener('keydown', Ripples.keyDownListen);
 	item.addEventListener('blur', function(e){
-		if(e.target !== Ripple.tempPressedButton)
+		if(e.target !== Ripples.tempPressedButton)
 			return;
-		Ripple.upListen(e);
+		Ripples.upListen(e);
 	});
 };
 
 
 /*** Easing function (exponential out easing) **/
 /*** (Source: Tween.js) **/
-Ripple.ease = function(k){
+Ripples.ease = function(k){
 	return k === 1 ? 1 : 1 - Math.pow(2, - 10 * k);
 };
 
 
 /*** Getting time now **/
-Ripple.now = (window.performance && window.performance.now)
+Ripples.now = (window.performance && window.performance.now)
     ? window.performance.now.bind(window.performance)
     : Date.now;
 
 
 /*** Key events helper **/
-Ripple.isSpacebarOrEnter = function(e){
+Ripples.isSpacebarOrEnter = function(e){
 	return e.key === ' ' || e.key === 'Spacebar' ||
 		   e.key === 'Enter' ||
 		   e.keyCode === 13 || e.keyCode === 32;
